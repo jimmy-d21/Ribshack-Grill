@@ -11,6 +11,7 @@ const ENV = {
   },
   server: {
     port: process.env.PORT || 3000,
+    secure: process.env.NODE_ENV === "production",
   },
   jwtSecret: process.env.JWT_SECRET,
 };

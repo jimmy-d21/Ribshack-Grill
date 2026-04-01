@@ -1,4 +1,5 @@
 import * as adminService from "../services/admin.service.js";
+import generateTokenSetCookies from "../utils/generateTokenSetCookies.js";
 
 export const login = async (req, res) => {
   try {
@@ -12,6 +13,8 @@ export const login = async (req, res) => {
     }
 
     const user = await adminService.login(email, password);
+
+    generateTokenSetCookies(res, user.id);
 
     res.json({ message: "Login successful", user });
   } catch (error) {
