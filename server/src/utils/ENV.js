@@ -10,9 +10,8 @@ const ENV = {
     name: process.env.DB_NAME,
   },
   server: {
-    port: process.env.PORT,
+    port: process.env.PORT || 3000,
   },
-
   jwtSecret: process.env.JWT_SECRET,
 };
 
