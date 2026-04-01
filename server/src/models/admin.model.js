@@ -9,6 +9,13 @@ class AdminModel {
     );
     return rows[0];
   }
+
+  static async findByAdminId(adminId) {
+    const { rows } = await db.query("SELECT * FROM admin_users WHERE id = $1", [
+      adminId,
+    ]);
+    return rows[0];
+  }
 }
 
 export default AdminModel;

@@ -1,4 +1,5 @@
 import AdminModel from "../models/admin.model.js";
+import BranchModel from "../models/branch.model.js";
 
 export const login = async (email, password) => {
   const user = await AdminModel.findByEmail(email);
@@ -10,4 +11,8 @@ export const login = async (email, password) => {
   }
 
   return user;
+};
+
+export const createBranch = async (branchData) => {
+  return await BranchModel.createBranch(branchData);
 };

@@ -6,8 +6,8 @@ const generateTokenSetCookies = (res, userId) => {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: ENV.server.secure,
-    sameSite: "Strict",
+    secure: ENV.server.secure, // Ensure this is false in local development
+    sameSite: "Lax", // Changed from Strict to Lax for easier local testing
     maxAge: 3600000,
   });
 };
