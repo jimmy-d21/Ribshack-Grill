@@ -4,6 +4,7 @@ import {
   createBranch,
   createProduct,
   deleteBranch,
+  deleteProduct,
   login,
   updateBranch,
   updateProduct,
@@ -22,6 +23,6 @@ router.delete("/branches/:id", adminAuhenticate, deleteBranch);
 // Products routes
 router.post("/products", adminAuhenticate, createProduct);
 router.patch("/products/:id", adminAuhenticate, updateProduct);
-// router.delete("/products/:id", adminAuhenticate, deleteProduct);
+router.delete("/products/:id", adminAuhenticate, deleteProduct);
 
 export default router;

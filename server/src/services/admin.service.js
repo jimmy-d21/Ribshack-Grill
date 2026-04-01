@@ -55,3 +55,11 @@ export const updateProduct = async (id, productData) => {
 
   return await ProductModel.updateProduct(id, productData);
 };
+
+export const deleteProduct = async (id) => {
+  const product = await ProductModel.findProductById(id);
+  if (!product) {
+    throw new Error("Product not found");
+  }
+  await ProductModel.deleteProduct(id);
+};

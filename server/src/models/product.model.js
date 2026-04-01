@@ -37,6 +37,10 @@ class ProductModel {
     );
     return rows[0];
   }
+
+  static async deleteProduct(id) {
+    await db.query("DELETE FROM products WHERE id = $1", [id]);
+  }
 }
 
 export default ProductModel;
