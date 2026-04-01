@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import AdminModel from "../models/admin.model.js";
 import BranchModel from "../models/branch.model.js";
+import ProductModel from "../models/product.model.js";
 
 export const login = async (email, password) => {
   const user = await AdminModel.findByEmail(email);
@@ -40,4 +41,17 @@ export const deleteBranch = async (id) => {
     throw new Error("Branch not found");
   }
   return await BranchModel.deleteBranch(id);
+};
+
+export const createProduct = async (productData) => {
+  return await ProductModel.createProducts(productData);
+};
+
+export const updateProduct = async (id, productData) => {
+  const product = await ProductModel.findProductById(id);
+  if (!product) {
+    throw new Error("Product not found");
+  }
+
+  return await ProductModel.updateProduct(id, productData);
 };

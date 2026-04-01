@@ -133,3 +133,63 @@ export const deleteBranch = async (req, res) => {
     console.error(error);
   }
 };
+
+export const createProduct = async (req, res) => {
+  try {
+    const { name, category, price, description, image_url } = req.body;
+
+    // Validate input
+    if (!name || !category || !price || !description || !image_url) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const product = await adminService.createProduct({
+      name,
+      category,
+      price,
+      description,
+      image_url,
+    });
+
+    res.status(201).json({ message: "Product created successfully", product });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error creating product: " + error.message });
+    console.error(error);
+  }
+};
+
+export const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      name,
+      category,
+      price,
+      description,
+      image_url,
+      includes_unli_rice,
+    } = req.body;
+
+    if (!name || !category || !price || !description || !image_url) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const product = await adminService.updateProduct(id, {
+      name,
+      category,
+      price,
+      description,
+      image_url,
+      includes_unli_rice,
+    });
+
+    res.json({ message: "Product updated successfully", product });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating product: " + error.message });
+    console.error(error);
+  }
+};

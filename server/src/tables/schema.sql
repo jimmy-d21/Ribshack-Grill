@@ -29,3 +29,16 @@ CREATE TABLE branches (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    category VARCHAR(20) NOT NULL CHECK (category IN ('pork', 'chicken', 'beef', 'kbb', 'seafood', 'drinks')), 
+    price DECIMAL(10, 2) NOT NULL, 
+    description TEXT, 
+    is_available BOOLEAN DEFAULT TRUE,
+    includes_unli_rice BOOLEAN DEFAULT FALSE,
+    image_url TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
