@@ -21,11 +21,23 @@ export const createBranch = async (branchData) => {
 };
 
 export const updateBranch = async (id, branchData) => {
+  const branch = await BranchModel.findBranchById(id);
+  if (!branch) {
+    throw new Error("Branch not found");
+  }
   if (branchData.password) {
     const hashedPassword = await bcrypt.hash(branchData.password, 10);
     branchData.password = hashedPassword;
-    return await BranchModel.updateBranchWithPassword(id, branchData);
+    return await BranchModel.updateBranchWithPassword(branch.id, branchData);
   } else {
-    return await BranchModel.updateBranchWithoutPassword(id, branchData);
+    return await BranchModel.updateBranchWithoutPassword(branch.id, branchData);
   }
+};
+
+export const deleteBranch = async (id) => {
+  const branch = await BranchModel.findBranchById(id);
+  if (!branch) {
+    throw new Error("Branch not found");
+  }
+  return await BranchModel.deleteBranch(id);
 };

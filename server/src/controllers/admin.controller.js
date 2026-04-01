@@ -119,3 +119,17 @@ export const updateBranch = async (req, res) => {
     console.error(error);
   }
 };
+
+export const deleteBranch = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await adminService.deleteBranch(id);
+    res.json({ message: "Branch deleted successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error deleting branch: " + error.message });
+    console.error(error);
+  }
+};

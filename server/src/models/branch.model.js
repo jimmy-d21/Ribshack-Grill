@@ -1,6 +1,13 @@
 import db from "../config/db.js";
 
 class BranchModel {
+  static async findBranchById(id) {
+    const { rows } = await db.query("SELECT * FROM branches WHERE id = $1", [
+      id,
+    ]);
+    return rows[0];
+  }
+
   static async createBranch(branchData) {
     const { rows } = await db.query(
       "INSERT INTO branches (name, city, region, manager_name, address, phone, status, username, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
@@ -52,6 +59,10 @@ class BranchModel {
       ],
     );
     return rows[0];
+  }
+
+  static async deleteBranch(id) {
+    await db.query("DELETE FROM branches WHERE id = $1", [id]);
   }
 }
 
