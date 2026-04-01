@@ -16,3 +16,11 @@ export const login = async (email, password) => {
 export const createBranch = async (branchData) => {
   return await BranchModel.createBranch(branchData);
 };
+
+export const updateBranch = async (id, branchData) => {
+  if (branchData.password) {
+    return await BranchModel.updateBranchWithPassword(id, branchData);
+  } else {
+    return await BranchModel.updateBranchWithoutPassword(id, branchData);
+  }
+};

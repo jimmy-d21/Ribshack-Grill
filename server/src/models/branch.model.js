@@ -18,6 +18,41 @@ class BranchModel {
     );
     return rows[0];
   }
+
+  static async updateBranchWithPassword(id, branchData) {
+    const { rows } = await db.query(
+      "UPDATE branches SET name = $1, city = $2, region = $3, manager_name = $4, address = $5, phone = $6, status = $7, password = $8 WHERE id = $9 RETURNING *",
+      [
+        branchData.name,
+        branchData.city,
+        branchData.region,
+        branchData.manager_name,
+        branchData.address,
+        branchData.phone,
+        branchData.status,
+        branchData.password,
+        id,
+      ],
+    );
+    return rows[0];
+  }
+
+  static async updateBranchWithoutPassword(id, branchData) {
+    const { rows } = await db.query(
+      "UPDATE branches SET name = $1, city = $2, region = $3, manager_name = $4, address = $5, phone = $6, status = $7 WHERE id = $8 RETURNING *",
+      [
+        branchData.name,
+        branchData.city,
+        branchData.region,
+        branchData.manager_name,
+        branchData.address,
+        branchData.phone,
+        branchData.status,
+        id,
+      ],
+    );
+    return rows[0];
+  }
 }
 
 export default BranchModel;

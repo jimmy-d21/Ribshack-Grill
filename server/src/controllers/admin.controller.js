@@ -72,3 +72,50 @@ export const createBranch = async (req, res) => {
     console.error(error);
   }
 };
+
+export const updateBranch = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      name,
+      city,
+      region,
+      manager_name,
+      address,
+      phone,
+      status,
+      password,
+    } = req.body;
+
+    // Validate input
+    if (
+      !name ||
+      !city ||
+      !region ||
+      !manager_name ||
+      !address ||
+      !phone ||
+      !status
+    ) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const branch = await adminService.updateBranch(id, {
+      name,
+      city,
+      region,
+      manager_name,
+      address,
+      phone,
+      status,
+      password,
+    });
+
+    res.json({ message: "Branch updated successfully", branch });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating branch: " + error.message });
+    console.error(error);
+  }
+};
