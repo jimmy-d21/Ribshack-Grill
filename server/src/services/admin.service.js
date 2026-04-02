@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import AdminModel from "../models/admin.model.js";
 import BranchModel from "../models/branch.model.js";
 import ProductModel from "../models/product.model.js";
+import InventoryModel from "../models/inventory.model.js";
 
 export const login = async (email, password) => {
   const user = await AdminModel.findByEmail(email);
@@ -62,4 +63,8 @@ export const deleteProduct = async (id) => {
     throw new Error("Product not found");
   }
   await ProductModel.deleteProduct(id);
+};
+
+export const getAllRequestInventory = async () => {
+  return await InventoryModel.getAllInventoryRequest();
 };

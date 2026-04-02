@@ -30,6 +30,7 @@ CREATE TABLE branches (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Products
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -39,6 +40,46 @@ CREATE TABLE products (
     is_available BOOLEAN DEFAULT TRUE,
     includes_unli_rice BOOLEAN DEFAULT FALSE,
     image_url TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Inventory
+CREATE TABLE inventory (
+    id SERIAL PRIMARY KEY,
+    branch_id INT NOT NULL REFERENCES branches(id) ON DELETE CASCADE,
+    product_id INT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    unit_measure VARCHAR(20) NOT NULL CHECK (unit_measure IN ('kg', 'pcs', 'packs', 'liters')),
+    type VARCHAR(20) NOT NULL CHECK (type IN ('meat', 'drinks', 'rice', 'supplies')),
+    current_stock_value DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    stock_threshold DECIMAL(10, 2) NOT NULL DEFAULT 0.00, 
+    status VARCHAR(20) DEFAULT 'Adequate' CHECK (status IN ('Adequate', 'Low Stock', 'Critical')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create the custom ENUM type
+CREATE TYPE request_priority AS ENUM ('low', 'medium', 'high');
+
+-- Create the "Header" table
+CREATE TABLE inventory_requests (
+    id SERIAL PRIMARY KEY,
+    branch_id INT NOT NULL REFERENCES branches(id) ON DELETE CASCADE,
+    priority request_priority DEFAULT 'medium',
+    notes TEXT,
+    status VARCHAR(20) DEFAULT 'Pending' CHECK (status IN ('Pending', 'Approved', 'Rejected')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create the "Items" table
+CREATE TABLE inventory_request_items (
+    id SERIAL PRIMARY KEY,
+    request_id INT NOT NULL REFERENCES inventory_requests(id) ON DELETE CASCADE,
+    product_id INT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    quantity DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    unit_measure VARCHAR(20) NOT NULL CHECK (unit_measure IN ('kg', 'pcs', 'packs', 'liters')),
+    type VARCHAR(20) NOT NULL CHECK (type IN ('meat', 'drinks', 'rice', 'supplies')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

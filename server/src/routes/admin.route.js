@@ -5,6 +5,7 @@ import {
   createProduct,
   deleteBranch,
   deleteProduct,
+  getAllRequestInventory,
   login,
   updateBranch,
   updateProduct,
@@ -24,5 +25,8 @@ router.delete("/branches/:id", adminAuhenticate, deleteBranch);
 router.post("/products", adminAuhenticate, createProduct);
 router.patch("/products/:id", adminAuhenticate, updateProduct);
 router.delete("/products/:id", adminAuhenticate, deleteProduct);
+
+// Invernotory routes
+router.get("/inventory", adminAuhenticate, getAllRequestInventory);
 
 export default router;

@@ -207,3 +207,16 @@ export const deleteProduct = async (req, res) => {
     console.error(error);
   }
 };
+
+export const getAllRequestInventory = async (req, res) => {
+  try {
+    const request_inventory = await adminService.getAllRequestInventory();
+
+    res.status(200).json(request_inventory);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error getAllRequest Inventory: " + error.message });
+    console.error(error);
+  }
+};
