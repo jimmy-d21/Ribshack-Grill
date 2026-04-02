@@ -7,6 +7,7 @@ import {
   declinedInventoryRequest,
   deleteBranch,
   deleteProduct,
+  getAllBranches,
   getAllRequestInventory,
   login,
   updateBranch,
@@ -19,6 +20,7 @@ const router = express.Router();
 router.post("/auth/login", login);
 
 // Branches routes
+router.get("/branches", adminAuhenticate, getAllBranches);
 router.post("/branches", adminAuhenticate, createBranch);
 router.patch("/branches/:id", adminAuhenticate, updateBranch);
 router.delete("/branches/:id", adminAuhenticate, deleteBranch);

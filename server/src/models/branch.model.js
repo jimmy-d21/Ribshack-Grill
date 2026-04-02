@@ -64,6 +64,12 @@ class BranchModel {
   static async deleteBranch(id) {
     await db.query("DELETE FROM branches WHERE id = $1", [id]);
   }
+
+  // Todo: Get the Today Revenue and Today Orders
+  static async getAllBranches() {
+    const { rows } = await db.query(`SELECT * FROM branches`);
+    return rows;
+  }
 }
 
 export default BranchModel;

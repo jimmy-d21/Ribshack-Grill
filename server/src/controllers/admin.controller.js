@@ -264,3 +264,16 @@ export const declinedInventoryRequest = async (req, res) => {
     });
   }
 };
+
+export const getAllBranches = async (req, res) => {
+  try {
+    const branches = await adminService.getAllBranches();
+    res.status(200).json(branches);
+  } catch (error) {
+    console.error("Get All Branches Error:", error.message);
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

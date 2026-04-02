@@ -99,3 +99,7 @@ export const declinedRequestInventory = async (notes, requestId) => {
 
   return await InventoryModel.declinedRequestInventory(notes, requestId);
 };
+
+export const getAllBranches = async () => {
+  return await BranchModel.getAllBranches();
+};
