@@ -84,3 +84,18 @@ export const approveRequestInventory = async (requestId) => {
 
   return await InventoryModel.executeApproval(requestId);
 };
+
+export const declinedRequestInventory = async (notes, requestId) => {
+  const request = await InventoryModel.findRequestById(requestId);
+  if (!request) {
+    throw new Error("Request not found.");
+  }
+
+  if (request.status !== "Pending") {
+    throw new Error(
+      `Cannot decline. This request is already ${request.status}.`,
+    );
+  }
+
+  return await InventoryModel.declinedRequestInventory(notes, requestId);
+};

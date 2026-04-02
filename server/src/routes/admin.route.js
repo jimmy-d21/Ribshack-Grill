@@ -4,6 +4,7 @@ import {
   approveInventoryRequest,
   createBranch,
   createProduct,
+  declinedInventoryRequest,
   deleteBranch,
   deleteProduct,
   getAllRequestInventory,
@@ -33,6 +34,11 @@ router.patch(
   "/inventory/approve/:id",
   adminAuhenticate,
   approveInventoryRequest,
+);
+router.patch(
+  "/inventory/declined/:id",
+  adminAuhenticate,
+  declinedInventoryRequest,
 );
 
 export default router;

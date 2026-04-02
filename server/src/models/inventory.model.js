@@ -84,6 +84,13 @@ class InventoryModel {
       client.release();
     }
   }
+
+  static async declinedRequestInventory(notes, requestId) {
+    await db.query(
+      `UPDATE inventory_requests SET status = $1, notes = $2 WHERE id = $3`,
+      ["Rejected", notes, requestId],
+    );
+  }
 }
 
 export default InventoryModel;

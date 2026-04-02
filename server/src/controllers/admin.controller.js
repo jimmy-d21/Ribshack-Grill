@@ -240,3 +240,27 @@ export const approveInventoryRequest = async (req, res) => {
     });
   }
 };
+
+export const declinedInventoryRequest = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { notes } = req.body;
+
+    if (!notes) {
+      return res.status(400).json({ message: "Please provide notes" });
+    }
+
+    await adminService.declinedRequestInventory(notes, id);
+
+    res.status(200).json({
+      success: true,
+      message: "Inventory Request has been declined",
+    });
+  } catch (error) {
+    console.error("Declined Error:", error.message);
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
