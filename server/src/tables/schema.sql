@@ -47,15 +47,28 @@ CREATE TABLE products (
 -- Inventory
 CREATE TABLE inventory (
     id SERIAL PRIMARY KEY,
+    
+    -- Relationships
     branch_id INT NOT NULL REFERENCES branches(id) ON DELETE CASCADE,
     product_id INT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    
+    -- Categorization (Must match the Request Items table)
     unit_measure VARCHAR(20) NOT NULL CHECK (unit_measure IN ('kg', 'pcs', 'packs', 'liters')),
     type VARCHAR(20) NOT NULL CHECK (type IN ('meat', 'drinks', 'rice', 'supplies')),
+    
+    -- Stock Values
     current_stock_value DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
-    stock_threshold DECIMAL(10, 2) NOT NULL DEFAULT 0.00, 
+    stock_threshold DECIMAL(10, 2) NOT NULL DEFAULT 10.00,
+    
+    -- Status Logic
     status VARCHAR(20) DEFAULT 'Adequate' CHECK (status IN ('Adequate', 'Low Stock', 'Critical')),
+    
+    -- Timestamps
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    -- This constraint prevents duplicate rows and allows the ON CONFLICT logic to work.
+    CONSTRAINT unique_branch_product UNIQUE (branch_id, product_id)
 );
 
 -- Create the custom ENUM type

@@ -1,6 +1,7 @@
 import express from "express";
 import adminAuhenticate from "../middlewares/admin.authenticate.js";
 import {
+  approveInventoryRequest,
   createBranch,
   createProduct,
   deleteBranch,
@@ -28,5 +29,10 @@ router.delete("/products/:id", adminAuhenticate, deleteProduct);
 
 // Invernotory routes
 router.get("/inventory", adminAuhenticate, getAllRequestInventory);
+router.patch(
+  "/inventory/approve/:id",
+  adminAuhenticate,
+  approveInventoryRequest,
+);
 
 export default router;

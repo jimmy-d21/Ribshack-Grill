@@ -68,3 +68,19 @@ export const deleteProduct = async (id) => {
 export const getAllRequestInventory = async () => {
   return await InventoryModel.getAllInventoryRequest();
 };
+
+export const approveRequestInventory = async (requestId) => {
+  const request = await InventoryModel.findRequestById(requestId);
+
+  if (!request) {
+    throw new Error("Request not found.");
+  }
+
+  if (request.status !== "Pending") {
+    throw new Error(
+      `Cannot approve. This request is already ${request.status}.`,
+    );
+  }
+
+  return await InventoryModel.executeApproval(requestId);
+};

@@ -220,3 +220,23 @@ export const getAllRequestInventory = async (req, res) => {
     console.error(error);
   }
 };
+
+export const approveInventoryRequest = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Call the static method from the class
+    await adminService.approveRequestInventory(id);
+
+    res.status(200).json({
+      success: true,
+      message: `Inventory Request #${id} has been approved and branch stock updated.`,
+    });
+  } catch (error) {
+    console.error("Approve Error:", error.message);
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
