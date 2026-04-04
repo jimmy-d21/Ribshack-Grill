@@ -149,6 +149,21 @@ CREATE TABLE order_items (
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE order_historys (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    total_orders INT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE order_history_items (
+    id SERIAL PRIMARY KEY,
+    history_id INT REFERENCES order_historys(id) ON DELETE CASCADE,
+    order_id INT NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+    product_id INT NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 CREATE TYPE staff_role AS ENUM ('manager', 'staff');
 CREATE TYPE staff_status AS ENUM ('On Duty', 'Scheduled', 'Off Duty');
